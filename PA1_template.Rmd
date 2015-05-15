@@ -44,14 +44,15 @@ activityData$interval <- as.factor(as.character(activityData$interval))
 intervalMean <- as.numeric(tapply(activityData$steps, activityData$interval, mean, na.rm = TRUE))
 intervals <- data.frame(intervals = as.numeric(levels(activityData$interval)), intervalMean)
 intervals <- intervals[order(intervals$intervals), ]
+
 labels <- c("00:00", "05:00", "10:00", "15:00", "20:00")
 labelsSeq <- seq(0, 2000, 500)
-plot(intervals$intervals, intervals$interval.mean, type = "l", main = "Average steps per 5-minute intervals", 
+plot(intervals$intervals, intervals$intervalMean, type = "l", main = "Average steps per 5-minute intervals", 
   	ylab = "Average steps", xlab = "Time of day", xaxt = "n")
 axis(side = 1, at = labelsSeq, labels = labels)
 ```
 
-Sort intervals to find nWhich 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+Sort intervals to find Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 ```{r}
 sortedIntervals <- intervals[order(intervals$intervalMean, decreasing = TRUE), ]
 head(sortedIntervals)
