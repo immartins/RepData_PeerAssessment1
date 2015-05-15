@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -20,7 +25,7 @@ hist(tapply(activityData$steps, activityData$date, sum), xlab = "Daily steps",
 		main = "Total steps per day")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
 Calculate the total number of steps taken per day.
 
@@ -58,16 +63,17 @@ activityData$interval <- as.factor(as.character(activityData$interval))
 intervalMean <- as.numeric(tapply(activityData$steps, activityData$interval, mean, na.rm = TRUE))
 intervals <- data.frame(intervals = as.numeric(levels(activityData$interval)), intervalMean)
 intervals <- intervals[order(intervals$intervals), ]
+
 labels <- c("00:00", "05:00", "10:00", "15:00", "20:00")
 labelsSeq <- seq(0, 2000, 500)
-plot(intervals$intervals, intervals$interval.mean, type = "l", main = "Average steps per 5-minute intervals", 
+plot(intervals$intervals, intervals$intervalMean, type = "l", main = "Average steps per 5-minute intervals", 
   	ylab = "Average steps", xlab = "Time of day", xaxt = "n")
 axis(side = 1, at = labelsSeq, labels = labels)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
 
-Sort intervals to find nWhich 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+Sort intervals to find Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 ```r
 sortedIntervals <- intervals[order(intervals$intervalMean, decreasing = TRUE), ]
@@ -87,7 +93,7 @@ head(sortedIntervals)
 ```r
 maxStepsInterval <- sortedIntervals$intervals[1[1]]
 ```
-The 5-minute interval, on average across all the days in the dataset, containing the maximum number of steps is between 8:35 AM and 8:40 AM.
+The 5-minute interval, on average across all the days in the dataset, containing the maximum number of steps is between 8:35 and 8:40.
 
 ```r
 maxStepsInterval
@@ -132,7 +138,7 @@ hist(tapply(activityDataWithoutNa$steps, activityDataWithoutNa$date,
 				sum), xlab = "Daily steps", breaks = 20, main = "Total steps taken day")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
 
 Calculate the mean and median total number of steps taken per day
 
@@ -189,9 +195,9 @@ plot(intervalsTypeOfDay$intervals, intervalsTypeOfDay$isWeekendMeans, type = "l"
 axis(side = 1, at = labelsSeq, labels = labels)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 
 
-Finally, combine the two plots to compare weekdays and weekends. There are differences between weekdays and weekend days. There are two mayn peacks in activity that seem to relate to going to work and coming back home after work. There are more peaks in activity during the weekend, possibly related to the fact that activity is not driven by the work routine.  
+Finally, combine the two plots to compare weekdays and weekends. There are differences between weekdays and weekend days. There are two main peaks in activity that seem to relate to going to work, and coming back home after work. There are more peaks in activity during the weekend, possibly related to the fact that activity is not driven by the work routine; during the weekend, activity also seem to ramp up and ramp down later in the day when compared to weekdays.  
 
 ```r
 plot(intervalsTypeOfDay$intervals, intervalsTypeOfDay$isWeekdayMeans, type = "l", 
@@ -202,5 +208,5 @@ lines(intervalsTypeOfDay$intervals, intervalsTypeOfDay$isWeekendMeans, type = "l
 legend(1500, 230, c("Weekend", "Weekday "), lty = c(1, 1), lwd = c(1, 1), col = c("blue", "red"))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
 
